@@ -15,7 +15,7 @@ export class LoginResolver {
   @Mutation(() => GraphQlLoginResponse, { nullable: true })
   async login(
     @Arg("loginInput") { email, password }: LoginInput
-  ): Promise<loginResponse | null> {
+  ): Promise<loginResponse | null | string> {
     const user = await User.findOne({ where: { email } });
 
     const validPassword = await bcrypt.compare(password, user!.password);
@@ -26,6 +26,10 @@ export class LoginResolver {
 
     if (!validPassword) {
       return null;
+    }
+
+    if (!user.confirmed) {
+      return "User Is Not Confirmed. Try Confirm Yourself Via Address";
     }
 
     const accessToken = sign(
