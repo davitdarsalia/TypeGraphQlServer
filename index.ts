@@ -9,14 +9,23 @@ import session from "express-session";
 import connectRedis from "connect-redis";
 import { GlobalRedisClient } from "./redis";
 import cors from "cors";
+
 import { LoginResolver } from "./src/modules/user/login";
+import { ConfirmUserResolver } from "./src/modules/user/confirmUser";
+import { ForgotPasswordResolver } from "./src/modules/user/forgotPassword";
 
 const main = async () => {
   const connection = await createConnection();
   await connection.synchronize();
 
   const schema = await buildSchema({
-    resolvers: [RegisterResolver, ProductResolver, LoginResolver],
+    resolvers: [
+      RegisterResolver,
+      ProductResolver,
+      LoginResolver,
+      ConfirmUserResolver,
+      ForgotPasswordResolver,
+    ],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
     },
@@ -55,8 +64,6 @@ const main = async () => {
     })
   );
 
-  // app.use((req, res, next) => {
-  // });
 
   apolloServer.applyMiddleware({
     app,
