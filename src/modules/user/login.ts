@@ -15,31 +15,17 @@ export class LoginResolver {
   @Mutation(() => GraphQlLoginResponse, { nullable: true })
   async login(
     @Arg("loginInput") { email, password }: LoginInput
-  ): Promise<loginResponse> {
+  ): Promise<loginResponse | null> {
     const user = await User.findOne({ where: { email } });
 
     const validPassword = await bcrypt.compare(password, user!.password);
 
     if (!user) {
-      return {
-        userID: -1,
-        accessToken: "",
-        accessTokenExpiryTime: 7,
-        refreshToken: "",
-        refreshTokenExpiryTime: 7,
-        code: 404,
-      };
+      return null;
     }
 
     if (!validPassword) {
-      return {
-        userID: -1,
-        accessToken: "",
-        accessTokenExpiryTime: 7,
-        refreshToken: "",
-        refreshTokenExpiryTime: 7,
-        code: 404,
-      };
+      return null;
     }
 
     const accessToken = sign(
