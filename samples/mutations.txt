@@ -1,0 +1,13 @@
+mutation {
+  createUser(userInput: 
+    {
+      firstName: "Name", 
+      lastName: "LastName", 
+      email: "randomname@gmail.com"
+      password: "randPassword"
+      secretKey: "secretkey",
+    }){
+        returning data field
+  }
+  		
+}
