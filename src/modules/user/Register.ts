@@ -12,6 +12,7 @@ import {
 import { User } from "../../entities/user.entity";
 import { RegisterInput } from "./registerInput.inputType";
 import { isAuth } from "../../utils/jwt";
+import { generateConfirmationURL, sendEmail } from "../../utils/email";
 
 @Resolver(User)
 export class RegisterResolver {
@@ -31,13 +32,15 @@ export class RegisterResolver {
     @Arg("userInput")
     { email, firstName, lastName, secretKey, password }: RegisterInput
   ): Promise<User> {
-    const user = User.create({
+    const user = await User.create({
       firstName: firstName,
       lastName: lastName,
       email: email,
       secretKey: secretKey,
       password: await bcrypt.hash(password, 12),
     }).save();
+
+    await sendEmail(email,await generateConfirmationURL(user.id));
 
     return user;
   }
