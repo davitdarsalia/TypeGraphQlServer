@@ -1,7 +1,7 @@
 import { Arg, Mutation, Resolver } from "type-graphql";
 
 import { User } from "../../entities/user.entity";
-import { GlobalRedisClient } from "../../../redis";
+import { GlobalRedisClient } from "../../../redis"; 
 
 @Resolver(User)
 export class ConfirmUserResolver {
