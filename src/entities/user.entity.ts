@@ -26,9 +26,11 @@ export class User extends BaseEntity {
   @Column()
   secretKey: string;
 
-  @Field()
   @Column()
   password: string;
+
+  @Column("bool", { default: false })
+  confirmed: boolean;
 
   // @Field() - We can put state merges in entity, instead of resolver
   // @Column()
