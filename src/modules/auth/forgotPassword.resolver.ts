@@ -1,8 +1,7 @@
-import * as bcrypt from "bcryptjs";
 import { Arg, Mutation, Resolver } from "type-graphql";
-import { GlobalRedisClient } from "../../../redis";
+import { RedisStoreInstance } from "../../lib/redis";
 
-import { User } from "../../entities/user.entity";
+import { User } from "../../entities/auth/user.entity";
 import { OtpGenerator } from "../../utils/otpGenerator";
 
 @Resolver()
@@ -21,7 +20,7 @@ export class ForgotPasswordResolver {
 
     const resetOTP = OtpGenerator();
     console.log(resetOTP);
-    GlobalRedisClient.set("otp", resetOTP);
+    RedisStoreInstance.set("otp", resetOTP);
 
     return "OTP Has Been Sent To Your Email";
   }
@@ -36,11 +35,11 @@ export class ForgotPasswordResolver {
     //   where: { email },
     // });
 
-    // const existingOTP = await GlobalRedisClient.get("otp");
+    // const existingOTP = await RedisStoreInstance.get("otp");
     // if (user && existingOTP === otp) {
     //   user.password = await bcrypt.hash(newPassword, 12);
     //   user.save();
-    //   GlobalRedisClient.del("otp");
+    //   RedisStoreInstance.del("otp");
 
     //   return true;
     // }

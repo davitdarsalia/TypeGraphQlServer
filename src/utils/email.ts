@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import { v4 } from "uuid";
-import { GlobalRedisClient } from "../../redis";
+import { RedisStoreInstance } from "../lib/redis";
 
 export const sendEmail = async (email: string, url: string) => {
   const testAccount = await nodemailer.createTestAccount();
@@ -30,7 +30,7 @@ export const sendEmail = async (email: string, url: string) => {
 
 export const generateConfirmationURL = async (userID: number) => {
   const uniqueID = v4();
-  await GlobalRedisClient.set(uniqueID, userID, "EX", 60 * 60 * 150);
+  await RedisStoreInstance.set(uniqueID, userID, "EX", 60 * 60 * 150);
 
   return `http://localhost:3000/user/confirm/${uniqueID}`;
 };

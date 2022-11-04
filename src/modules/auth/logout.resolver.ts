@@ -1,6 +1,6 @@
-import { Mutation, Resolver, Arg, Query,  } from "type-graphql";
-import { GlobalRedisClient } from "../../../redis";
-import { AuthContext } from "../../types/authContext";
+import { Mutation, Resolver, Arg, Query } from "type-graphql";
+
+import { AuthContext } from "../../types/generics/authContext";
 
 @Resolver()
 export class LogoutResolver {

@@ -1,7 +1,5 @@
-import { GraphQLObjectType, GraphQLString } from "graphql";
+import { GraphQLObjectType, GraphQLString, GraphQLScalarType } from "graphql";
 import { Int } from "type-graphql";
-
-import { GraphQLScalarType, Kind } from "graphql";
 
 export interface loginResponse {
   userID: number;

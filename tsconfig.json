@@ -1,13 +1,26 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "target": "es2018",
-    "module": "commonjs",
-    "lib": ["es2018", "esnext.asynciterable"],
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false,
-    "esModuleInterop": true
-  }
+	"compilerOptions": {
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"target": "es2018",
+		"module": "commonjs",
+		"lib": ["es2018", "esnext.asynciterable"],
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"strictPropertyInitialization": false,
+		"esModuleInterop": true,
+		"baseUrl": "./src",
+		"paths": {
+			"@customDecorators/*": ["./src/customDecorators/*"],
+			"@entities": ["./src/entities"],
+			"@lib": ["./src/lib"],
+			"@modules": ["./src/modules"],
+			"@types": ["./src/types"],
+			"@utils/*": ["./src/utils/*"]
+		},
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true
+	},
+	"include": ["src", "babel.config.js"]
 }

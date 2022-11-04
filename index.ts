@@ -1,18 +1,22 @@
+import "reflect-metadata";
+
+import * as Express from "express";
+import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import * as Express from "express";
-import "reflect-metadata";
-import { createConnection } from "typeorm";
-import { RegisterResolver } from "./src/modules/user/Register";
-import { ProductResolver } from "./src/modules/content/addProduct";
+
 import session from "express-session";
 import connectRedis from "connect-redis";
-import { GlobalRedisClient } from "./redis";
+
+import { RegisterResolver } from "./src/modules/auth/Register.resolver";
+import { ProductResolver } from "./src/modules/content/addProduct.resolver";
+
+import { RedisStoreInstance } from "./src/lib/redis";
 import cors from "cors";
 
-import { LoginResolver } from "./src/modules/user/login";
-import { ConfirmUserResolver } from "./src/modules/user/confirmUser";
-import { ForgotPasswordResolver } from "./src/modules/user/forgotPassword";
+import { LoginResolver } from "./src/modules/auth/login.resolver";
+import { ConfirmUserResolver } from "./src/modules/auth/confirmUser.resolver";
+import { ForgotPasswordResolver } from "./src/modules/auth/forgotPassword.resolver";
 
 const main = async () => {
   const connection = await createConnection();
@@ -50,7 +54,7 @@ const main = async () => {
   app.use(
     session({
       store: new RedisStore({
-        client: GlobalRedisClient as any,
+        client: RedisStoreInstance as any,
       }),
       name: "qid",
       secret: "aslkdfjoiq12312",
@@ -63,7 +67,6 @@ const main = async () => {
       },
     })
   );
-
 
   apolloServer.applyMiddleware({
     app,
