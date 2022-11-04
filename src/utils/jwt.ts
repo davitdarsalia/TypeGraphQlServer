@@ -3,9 +3,9 @@ import { JwtPayload, sign } from "jsonwebtoken";
 import { v1, v4 } from "uuid";
 
 import { MiddlewareFn } from "type-graphql";
-import { User } from "../entities/user.entity";
-import { AuthContext } from "../types/authContext";
+import { User } from "../entities/auth/user.entity";
 import { IPMiddleware } from "./ipAddress";
+import { AuthContext } from "../types/generics/authContext";
 
 type tokenType = "Access" | "Refresh";
 
@@ -30,7 +30,7 @@ export const SignToken = (user: User, tokenType: tokenType): string => {
       email: user.email,
       issuedAt: new Date().toLocaleDateString(),
       version: `${v1()}-${v4()}/${v4()}`,
-      clientIdentifier: IPMiddleware()
+      clientIdentifier: IPMiddleware(),
     },
     tokenType === "Access"
       ? "nd1infi84ng82n8f1n39ef953n4g8gn"

@@ -9,8 +9,8 @@ import {
   UseMiddleware,
 } from "type-graphql";
 
-import { User } from "../../entities/user.entity";
-import { RegisterInput } from "./registerInput.inputType";
+import { User } from "../../entities/auth/user.entity";
+import { RegisterInput } from "../../types/inputTypes/registerInput.inputType";
 import { isAuth } from "../../utils/jwt";
 import { generateConfirmationURL, sendEmail } from "../../utils/email";
 
@@ -40,7 +40,7 @@ export class RegisterResolver {
       password: await bcrypt.hash(password, 12),
     }).save();
 
-    await sendEmail(email,await generateConfirmationURL(user.id));
+    await sendEmail(email, await generateConfirmationURL(user.id));
 
     return user;
   }
