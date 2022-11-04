@@ -12,9 +12,7 @@ export class IsEmailAlreadyUsedConstraint
 {
   validate(email: string) {
     return User.findOne({ where: { email } }).then((user) => {
-      if (user) {
-        throw new Error("User Is Registered");
-      }
+      if (user) return false;
       return true;
     });
   }

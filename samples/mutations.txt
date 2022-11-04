@@ -9,15 +9,5 @@ mutation {
     }){
         returning data field
   }
-}
-
-mutation{
-  login(loginInput:{
-    email: "randomname@gmail.com",
-    password: "randomPass"
-  })
-}
-
-mutation {
-  confirmUser(id: "287ea967-03d6-45f6-98c6-7c8817d1864b")
+  		
 }
